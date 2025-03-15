@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun with Animals - Interactive English Lesson</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #4ecdc4;
+            font-size: 1.8em;
+            margin-top: 0;
+        }
+        h3 {
+            color: #ff9a00;
+            text-align: center;
+            background-color: #fffacd;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .animal-category {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .farm {
+            background-color: #d4f1f4;
+        }
+        .wild {
+            background-color: #ffe6e6;
+        }
+        .pets {
+            background-color: #dcedc8;
+        }
+        .animal-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .animal-list li {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        .activity {
+            background-color: #fff3cd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+        }
+        .song {
+            background-color: #e6f7ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+        .quiz {
+            background-color: #f8d7da;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+        .habitats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .habitat {
+            width: 45%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f0e6ff;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #ff6b6b;
+        }
+        .animal-sounds {
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        .writing-space {
+            border: 2px dashed #aaa;
+            height: 100px;
+            margin: 15px 0;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(to right, #ff9a00, #ff6b6b, #4ecdc4, #56ab2f);
+            margin: 30px 0;
+            border-radius: 3px;
+        }
+        .quiz-option {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .quiz-option:hover {
+            background-color: #ffe0e0;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .feedback {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .positive-feedback {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+        .negative-feedback {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+        }
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .memory-card {
+            height: 80px;
+            background-color: #4ecdc4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            cursor: pointer;
+            color: transparent;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .memory-card.flipped {
+            background-color: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+        .memory-card.matched {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .animal-sound-button {
+            background-color: #ff9a00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .drag-container {
+            margin: 20px 0;
+        }
+        .drag-item {
+            padding: 10px;
+            margin: 5px;
+            background-color: #e6f7ff;
+            border-radius: 5px;
+            cursor: grab;
+            display: inline-block;
+        }
+        .drop-zone {
+            height: 100px;
+            border: 2px dashed #aaa;
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 20px;
+            background: linear-gradient(to right, #ff9a00, #ff6b6b);
+            border-radius: 10px;
+            transition: width 0.5s;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .toggle-translation {
+            background-color: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .translation {
+            display: none;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐾 FUN WITH ANIMALS! 🐾</h1>
+        <h2>English Lesson for Children</h2>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🌟 LET'S LEARN ANIMAL NAMES! 🌟</h3>
+        
+        <div class="animal-category farm">
+            <h4>Farm Animals:</h4>
+            <ul class="animal-list">
+                <li>Cow = 牛 <span class="animal-sounds">→ Moo! Moo!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('moo')">🔊</button>
+                </li>
+                <li>Horse = 马 <span class="animal-sounds">→ Neigh! Neigh!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('neigh')">🔊</button>
+                </li>
+                <li>Pig = 猪 <span class="animal-sounds">→ Oink! Oink!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('oink')">🔊</button>
+                </li>
+                <li>Sheep = 羊 <span class="animal-sounds">→ Baa! Baa!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('baa')">🔊</button>
+                </li>
+                <li>Chicken = 鸡 <span class="animal-sounds">→ Cluck! Cluck!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('cluck')">🔊</button>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="animal-category wild">
+            <h4>Wild Animals:</h4>
+            <ul class="animal-list">
+                <li>Lion = 狮子 <span class="animal-sounds">→ Roar! Roar!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('roar')">🔊</button>
+                </li>
+                <li>Elephant = 大象 <span class="animal-sounds">→ Trumpet! Trumpet!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('trumpet')">🔊</button>
+                </li>
+                <li>Monkey = 猴子 <span class="animal-sounds">→ Ooh! Ooh! Aah! Aah!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('monkey')">🔊</button>
+                </li>
+                <li>Giraffe = 长颈鹿</li>
+                <li>Zebra = 斑马</li>
+            </ul>
+        </div>
+        
+        <div class="animal-category pets">
+            <h4>Pets:</h4>
+            <ul class="animal-list">
+                <li>Dog = 狗 <span class="animal-sounds">→ Woof! Woof!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('woof')">🔊</button>
+                </li>
+                <li>Cat = 猫 <span class="animal-sounds">→ Meow! Meow!</span>
+                    <button class="animal-sound-button" onclick="playAnimalSound('meow')">🔊</button>
+                </li>
+                <li>Fish = 鱼 <span class="animal-sounds">→ Bubble! Bubble!</span></li>
+                <li>Rabbit = 兔子</li>
+                <li>Hamster = 仓鼠</li>
+            </ul>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🎮 FUN ACTIVITIES 🎮</h3>
+        
+        <div class="activity">
+            <h4>1. Animal Charades</h4>
+            <ul>
+                <li>Act like an animal</li>
+                <li>Your friends guess: "It's a lion!"</li>
+                <li>Use the phrase: "Are you a ___?"</li>
+            </ul>
+        </div>
+        
+        <div class="activity">
+            <h4>2. Memory Match</h4>
+            <p>Match the animal with its English name:</p>
+            <div class="memory-game" id="memoryGame">
+                <!-- Cards will be inserted by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="activity">
+            <h4>3. Animal Sounds Game</h4>
+            <p>Listen to the sound and guess the animal:</p>
+            <button onclick="playRandomAnimalSound()">Play Random Sound 🔊</button>
+            <div id="animalSoundGuess" style="margin-top: 10px;">
+                <input type="text" id="animalGuessInput" placeholder="Type animal name...">
+                <button onclick="checkAnimalSound()">Check</button>
+                <p id="animalSoundFeedback"></p>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>📝 SIMPLE SENTENCES TO PRACTICE 📝</h3>
+        
+        <div style="background-color: #e6f7ff; padding: 15px; border-radius: 10px;">
+            <ul>
+                <li>
+                    I have a dog. 
+                    <button class="toggle-translation" onclick="toggleTranslation(this)">Show Chinese</button>
+                    <span class="translation">我有一只狗。</span>
+                </li>
+                <li>
+                    I like cats. 
+                    <button class="toggle-translation" onclick="toggleTranslation(this)">Show Chinese</button>
+                    <span class="translation">我喜欢猫。</span>
+                </li>
+                <li>
+                    The lion is big. 
+                    <button class="toggle-translation" onclick="toggleTranslation(this)">Show Chinese</button>
+                    <span class="translation">狮子很大。</span>
+                </li>
+                <li>
+                    The mouse is small. 
+                    <button class="toggle-translation" onclick="toggleTranslation(this)">Show Chinese</button>
+                    <span class="translation">老鼠很小。</span>
+                </li>
+                <li>
+                    The bird can fly. 
+                    <button class="toggle-translation" onclick="toggleTranslation(this)">Show Chinese</button>
+                    <span class="translation">鸟会飞。</span>
+                </li>
+                <li>
+                    The fish can swim. 
+                    <button class="toggle-translation" onclick="toggleTranslation(this)">Show Chinese</button>
+                    <span class="translation">鱼会游泳。</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🎵 ANIMAL SONG 🎵</h3>
+        
+        <div class="song">
+            <p>
+                Old MacDonald had a farm, E-I-E-I-O!<br>
+                And on his farm he had a cow, E-I-E-I-O!<br>
+                With a moo moo here and a moo moo there,<br>
+                Here a moo, there a moo, everywhere a moo moo.<br>
+                Old MacDonald had a farm, E-I-E-I-O!
+            </p>
+            <button onclick="playSong()">🎵 Play Song 🎵</button>
+            <p>Choose an animal for the next verse:</p>
+            <select id="animalSelect">
+                <option value="cow">Cow (Moo)</option>
+                <option value="pig">Pig (Oink)</option>
+                <option value="sheep">Sheep (Baa)</option>
+                <option value="chicken">Chicken (Cluck)</option>
+                <option value="dog">Dog (Woof)</option>
+            </select>
+            <button onclick="changeVerse()">Change Verse</button>
+            <p id="currentVerse"></p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🎨 COLORING AND VOCABULARY 🎨</h3>
+        
+        <div style="background-color: #f0e6ff; padding: 15px; border-radius: 10px;">
+            <p>Match the animal parts with their names:</p>
+            
+            <div class="drag-container">
+                <div class="drag-item" draggable="true" data-part="head">Head</div>
+                <div class="drag-item" draggable="true" data-part="tail">Tail</div>
+                <div class="drag-item" draggable="true" data-part="paw">Paw</div>
+                <div class="drag-item" draggable="true" data-part="wing">Wing</div>
+                <div class="drag-item" draggable="true" data-part="beak">Beak</div>
+            </div>
+            
+            <h4>Parts of animals:</h4>
+            <ul>
+                <li>Head = 头 <div class="drop-zone" data-part="head"></div></li>
+                <li>Tail = 尾巴 <div class="drop-zone" data-part="tail"></div></li>
+                <li>Paw/Foot = 爪子/脚 <div class="drop-zone" data-part="paw"></div></li>
+                <li>Wing = 翅膀 <div class="drop-zone" data-part="wing"></div></li>
+                <li>Beak = 喙 <div class="drop-zone" data-part="beak"></div></li>
+                <li>Fur = 毛皮</li>
+                <li>Feathers = 羽毛</li>
+            </ul>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🏆 ANIMAL QUIZ 🏆</h3>
+        
+        <div class="quiz">
+            <div class="quiz-question">
+                <p>1. Which animal says "Meow"?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">a) Dog</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">b) Cat</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">c) Duck</div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+            
+            <div class="quiz-question">
+                <p>2. Which animal is very tall with a long neck?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">a) Snake</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">b) Giraffe</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">c) Horse</div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+            
+            <div class="quiz-question">
+                <p>3. Which animal lives in water?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, 'a')">a) Fish</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'a')">b) Rabbit</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'a')">c) Lion</div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+            
+            <div class="quiz-question">
+                <p>4. Which animal has wings and can fly?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">a) Elephant</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">b) Bird</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">c) Frog</div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+            
+            <div class="quiz-question">
+                <p>5. Which animal is king of the jungle?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">a) Tiger</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">b) Lion</div>
+                <div class="quiz-option" onclick="checkAnswer(this, 'b')">c) Bear</div>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🎭 ROLE PLAY GAME 🎭</h3>
+        
+        <div style="background-color: #dcedc8; padding: 15px; border-radius: 10px;">
+            <p>Pretend to be at a pet shop:</p>
+            
+            <div id="rolePlayGame">
+                <p id="shopkeeper">Shop assistant: "Hello! Can I help you?"</p>
+                <select id="customerResponse">
+                    <option value="yes">Yes, I want to buy a pet.</option>
+                    <option value="looking">I'm just looking.</option>
+                    <option value="question">Do you have any dogs?</option>
+                </select>
+                <button onclick="continueRolePlay()">Say this</button>
+                <div id="rolePlayConversation"></div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>📚 HOMEWORK FUN 📚</h3>
+        
+        <div style="background-color: #ffe6e6; padding: 15px; border-radius: 10px;">
+            <p>Create 3 sentences about your favorite animal:</p>
+            
+            <div>
+                <p>1. It is a 
+                    <select id="animalType">
+                        <option value="dog">dog</option>
+                        <option value="cat">cat</option>
+                        <option value="bird">bird</option>
+                        <option value="fish">fish</option>
+                        <option value="rabbit">rabbit</option>
+                    </select>
+                </p>
+                <p>2. It is 
+                    <select id="animalColor">
+                        <option value="brown">brown</option>
+                        <option value="black">black</option>
+                        <option value="white">white</option>
+                        <option value="gray">gray</option>
+                        <option value="orange">orange</option>
+                    </select>
+                </p>
+                <p>3. It can 
+                    <select id="animalAction">
+                        <option value="run">run</option>
+                        <option value="jump">jump</option>
+                        <option value="swim">swim</option>
+                        <option value="fly">fly</option>
+                        <option value="climb">climb</option>
+                    </select>
+                </p>
+                <button onclick="generateStory()">Create My Story</button>
+                <p id="animalStory"></p>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h3>🌈 ANIMAL HABITATS 🌈</h3>
+        
+        <div class="habitats">
+            <div class="habitat">
+                <h4>Forest = 森林</h4>
+                <p>Fox, Deer, Owl</p>
+            </div>
+            
+            <div class="habitat">
+                <h4>Ocean = 海洋</h4>
+                <p>Shark, Whale, Octopus</p>
+            </div>
+            
+            <div class="habitat">
+                <h4>Jungle = 丛林</h4>
+                <p>Monkey, Tiger, Parrot</p>
+            </div>
+            
+            <div class="habitat">
+                <h4>Farm = 农场</h4>
+                <p>Cow, Horse, Chicken</p>
+            </div>
+            
+            <div class="habitat">
+                <h4>Desert = 沙漠</h4>
+                <p>Camel, Scorpion, Snake</p>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="footer">
+            <p>Remember, learning English is FUN! 🌟</p>
+            <p>You completed: <span id="completion">0%</span> of the lesson!</p>
+        </div>
+    </div>
+
+    <script>
+        // Track user progress
+        let progress = 0;
+        const totalSections = 8;
+        
+        function updateProgress(increment) {
+            progress += increment;
+            const percentage = Math.min(Math.round((progress / totalSections) * 100), 100);
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressBar').innerText = percentage + '%';
+            document.getElementById('completion').innerText = percentage + '%';
+        }
+        
+        // Quiz functions
+        function checkAnswer(element, correctAnswer) {
+            const parentQuestion = element.parentNode;
+            const feedbackElement = parentQuestion.querySelector('.feedback');
+            const options = parentQuestion.querySelectorAll('.quiz-option');
+            
+            // Reset all options
+            options.forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            // Check if the answer is correct
+            if (element.innerText.charAt(0).toLowerCase() === correctAnswer) {
+                element.classList.add('correct');
+                feedbackElement.innerText = 'Correct! Great job! 🎉';
+                feedbackElement.className = 'feedback positive-feedback';
+                updateProgress(0.1);
+            } else {
+                element.classList.add('incorrect');
+                feedbackElement.innerText = 'Try again! 🤔';
+                feedbackElement.className = 'feedback negative-feedback';
+                
+                // Highlight the correct answer
+                options.forEach(option => {
+                    if (option.innerText.charAt(0).toLowerCase() === correctAnswer) {
+                        option.classList.add('correct');
+                    }
+                });
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+        
+        // Animal sounds
+        const animalSounds = {
+            'moo': 'cow',
+            'neigh': 'horse',
+            'oink': 'pig',
+            'baa': 'sheep',
+            'cluck': 'chicken',
+            'roar': 'lion',
+            'trumpet': 'elephant',
+            'monkey': 'monkey',
+            'woof': 'dog',
+            'meow': 'cat'
+        };
+        
+        let currentAnimalSound = '';
+        
+        function playAnimalSound(sound) {
+            // In a real implementation, this would play an audio file
+            alert(`Playing ${sound} sound!`);
+            updateProgress(0.05);
+        }
+        
+        function playRandomAnimalSound() {
+            const sounds = Object.keys(animalSounds);
+            currentAnimalSound = sounds[Math.floor(Math.random() * sounds.length)];
+            playAnimalSound(currentAnimalSound);
+        }
+        
+        function checkAnimalSound() {
+            const userGuess = document.getElementById('animalGuessInput').value.toLowerCase();
+            const correctAnimal = animalSounds[currentAnimalSound];
+            const feedbackElement = document.getElementById('animalSoundFeedback');
+            
+            if (userGuess === correctAnimal) {
+                feedbackElement.innerText = `Correct! That was a ${correctAnimal}! 🎉`;
+                feedbackElement.className = 'positive-feedback';
+                updateProgress(0.1);
+            } else {
+                feedbackElement.innerText = `Try again! It was a ${correctAnimal}. 🤔`;
+                feedbackElement.className = 'negative-feedback';
+            }
+            
+            document.getElementById('animalGuessInput').value = '';
+        }
+        
+        // Memory game
+        const animals = ['dog', 'cat', 'cow', 'pig', 'lion', 'horse', 'sheep', 'chicken'];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        
+        function initMemoryGame() {
+            const gameContainer = document.getElementById('memoryGame');
+            gameContainer.innerHTML = '';
+            
+            const animalPairs = [...animals, ...animals];
+            animalPairs.sort(() => Math.random() - 0.5);
+            
+            animalPairs.forEach((animal, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.textContent = animal;
+                card.dataset.animal = animal;
+                card.dataset.index = index;
+                card.addEventListener('click', flipCard);
+                gameContainer.appendChild(card);
+            });
+            
+            flippedCards = [];
+            matchedPairs = 0;
+        }
+        
+        function flipCard() {
+            if (flippedCards.length < 2 && !this.classList.contains('flipped') && !this.classList.contains('matched')) {
+                this.classList.add('flipped');
+                flippedCards.push(this);
+                
+                if (flippedCards.length === 2) {
+                    setTimeout(checkForMatch, 500);
+                }
+            }
+        }
+        
+        function checkForMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.animal === card2.dataset.animal) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                
+                if (matchedPairs === animals.length) {
+                    alert('Congratulations! You matched all animals!');
+                    updateProgress(0.2);
+                    setTimeout(initMemoryGame, 1000);
+                }
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+            }
+            
+            flippedCards = [];
+        }
+        
+        // Role play game
+        let conversationStage = 0;
+        const conversationFlow = [
+            { role: 'customer', text: 'Yes, I want to buy a pet.' },
+            { role: 'shopkeeper', text: 'What pet do you like?' },
+            { role: 'customer', text: 'I like dogs.' },
+            { role: 'shopkeeper', text: 'Here is a dog. It\'s cute!' },
+            { role: 'customer', text: 'How much is it?' },
+            { role: 'shopkeeper', text: 'It\'s 10 euros.' },
+            { role: 'customer', text: 'OK, I\'ll take it. Thank you!' },
+            { role: 'shopkeeper', text: 'You\'re welcome! Enjoy your new pet!' }
+        ];
+        
+        function continueRolePlay() {
+            const conversation = document.getElementById('rolePlayConversation');
+            const select = document.getElementById('customerResponse');
+            
+            if (conversationStage === 0) {
+                // Start the conversation
+                conversation.innerHTML += `<p>Customer: "${select.value === 'yes' ? 'Yes, I want to buy a pet.' : 
+                                           select.value === 'looking' ? 'I\'m just looking.' : 
+                                           'Do you have any dogs?'}"</p>`;
+                
+                if (select.value === 'yes') {
+                    conversation.innerHTML += `<p>Shop assistant: "What pet do you like?"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="dog">I like dogs.</option>`;
+                    select.innerHTML += `<option value="cat">I like cats.</option>`;
+                    select.innerHTML += `<option value="fish">I like fish.</option>`;
+                } else if (select.value === 'looking') {
+                    conversation.innerHTML += `<p>Shop assistant: "Feel free to look around. Let me know if you need help."</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="change">Actually, I want to buy a pet.</option>`;
+                } else {
+                    conversation.innerHTML += `<p>Shop assistant: "Yes, we have many dogs. Would you like to see them?"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="yes">Yes, please.</option>`;
+                    select.innerHTML += `<option value="no">No, I'll look at other pets.</option>`;
+                }
+            } else if (conversationStage === 1) {
+                if (select.value === 'dog' || select.value === 'cat' || select.value === 'fish') {
+                    conversation.innerHTML += `<p>Customer: "I like ${select.value}s."</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "Here is a ${select.value}. It's cute!"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="price">How much is it?</option>`;
+                    select.innerHTML += `<option value="different">Can I see a different one?</option>`;
+                } else if (select.value === 'change') {
+                    conversation.innerHTML += `<p>Customer: "Actually, I want to buy a pet."</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "Great! What pet do you like?"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="dog">I like dogs.</option>`;
+                    select.innerHTML += `<option value="cat">I like cats.</option>`;
+                    select.innerHTML += `<option value="fish">I like fish.</option>`;
+                    conversationStage = 0;
+                } else if (select.value === 'yes') {
+                    conversation.innerHTML += `<p>Customer: "Yes, please."</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "Here are our dogs. This one is very friendly."</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="price">How much is it?</option>`;
+                    select.innerHTML += `<option value="different">Can I see a different one?</option>`;
+                } else {
+                    conversation.innerHTML += `<p>Customer: "No, I'll look at other pets."</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "What other pets are you interested in?"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="cat">I like cats.</option>`;
+                    select.innerHTML += `<option value="fish">I like fish.</option>`;
+                }
+            } else if (conversationStage === 2) {
+                if (select.value === 'price') {
+                    conversation.innerHTML += `<p>Customer: "How much is it?"</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "It's 10 euros."</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="buy">OK, I'll take it. Thank you!</option>`;
+                    select.innerHTML += `<option value="expensive">That's too expensive.</option>`;
+                } else {
+                    conversation.innerHTML += `<p>Customer: "Can I see a different one?"</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "Of course! How about this one?"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="price">How much is it?</option>`;
+                    select.innerHTML += `<option value="like">I like this one!</option>`;
+                }
+            } else if (conversationStage === 3) {
+                if (select.value === 'buy') {
+                    conversation.innerHTML += `<p>Customer: "OK, I'll take it. Thank you!"</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "You're welcome! Enjoy your new pet!"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="restart">Restart conversation</option>`;
+                    updateProgress(0.2);
+                } else if (select.value === 'expensive') {
+                    conversation.innerHTML += `<p>Customer: "That's too expensive."</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "I can give you a discount. It's 8 euros now."</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="buy">OK, I'll take it. Thank you!</option>`;
+                    select.innerHTML += `<option value="leave">No thank you, I'll come back later.</option>`;
+                } else {
+                    conversation.innerHTML += `<p>Customer: "I like this one!"</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "Great choice! It's 10 euros."</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="buy">OK, I'll take it. Thank you!</option>`;
+                    select.innerHTML += `<option value="expensive">That's too expensive.</option>`;
+                }
+            } else if (conversationStage === 4) {
+                if (select.value === 'restart') {
+                    // Restart conversation
+                    conversation.innerHTML = '';
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="yes">Yes, I want to buy a pet.</option>`;
+                    select.innerHTML += `<option value="looking">I'm just looking.</option>`;
+                    select.innerHTML += `<option value="question">Do you have any dogs?</option>`;
+                    conversationStage = -1;
+                } else if (select.value === 'leave') {
+                    conversation.innerHTML += `<p>Customer: "No thank you, I'll come back later."</p>`;
+                    conversation.innerHTML += `<p>Shop assistant: "No problem. Have a nice day!"</p>`;
+                    select.innerHTML = '';
+                    select.innerHTML += `<option value="restart">Restart conversation</option>`;
+                }
+            }
+            
+            conversationStage++;
+        }
+        
+        // Toggle translations
+        function toggleTranslation(button) {
+            const translation = button.nextElementSibling;
+            if (translation.style.display === 'none' || translation.style.display === '') {
+                translation.style.display = 'inline';
+                button.innerText = 'Hide Chinese';
+                updateProgress(0.05);
+            } else {
+                translation.style.display = 'none';
+                button.innerText = 'Show Chinese';
+            }
+        }
+        
+        // Song functions
+        function playSong() {
+            alert("Playing Old MacDonald song!");
+            updateProgress(0.1);
+        }
+        
+        function changeVerse() {
+            const animal = document.getElementById('animalSelect').value;
+            let sound;
+            
+            switch(animal) {
+                case 'cow': sound = 'moo'; break;
+                case 'pig': sound = 'oink'; break;
+                case 'sheep': sound = 'baa'; break;
+                case 'chicken': sound = 'cluck'; break;
+                case 'dog': sound = 'woof'; break;
+            }
+            
+            document.getElementById('currentVerse').innerHTML = `
+                Old MacDonald had a farm, E-I-E-I-O!<br>
+                And on his farm he had a ${animal}, E-I-E-I-O!<br>
+                With a ${sound} ${sound} here and a ${sound} ${sound} there,<br>
+                Here a ${sound}, there a ${sound}, everywhere a ${sound} ${sound}.<br>
+                Old MacDonald had a farm, E-I-E-I-O!
+            `;
+            
+            updateProgress(0.05);
+        }
+        
+        // Drag and drop for animal parts
+        document.addEventListener('DOMContentLoaded', () => {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+            });
+            
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+            
+            // Initialize memory game
+            initMemoryGame();
+            
+            // Start with 10% progress
+            updateProgress(0.1);
+        });
+        
+        function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.part);
+            setTimeout(() => {
+                e.target.classList.add('dragging');
+            }, 0);
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.classList.add('drag-over');
+        }
+        
+        function handleDragLeave(e) {
+            e.target.classList.remove('drag-over');
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+            
+            const part = e.dataTransfer.getData('text/plain');
+            const targetPart = e.target.dataset.part;
+            
+            if (part === targetPart) {
+                // Correct match
+                e.target.innerHTML = `Correct! This is the ${part}! ✓`;
+                e.target.style.backgroundColor = '#d4edda';
+                
+                // Hide the original drag item
+                document.querySelector(`.drag-item[data-part="${part}"]`).style.display = 'none';
+                
+                // Update progress
+                updateProgress(0.1);
+            } else {
+                // Incorrect match
+                e.target.innerHTML = `Try again! This is not the ${part}.`;
+                e.target.style.backgroundColor = '#f8d7da';
+                
+                // Clear after a short delay
+                setTimeout(() => {
+                    e.target.innerHTML = '';
+                    e.target.style.backgroundColor = '#f9f9f9';
+                }, 1500);
+            }
+        }
+        
+        // Story generator
+        function generateStory() {
+            const animal = document.getElementById('animalType').value;
+            const color = document.getElementById('animalColor').value;
+            const action = document.getElementById('animalAction').value;
+            
+            const story = `
+                <div style="background-color: #e6f7ff; padding: 10px; border-radius: 5px;">
+                    <p><strong>My ${animal}</strong></p>
+                    <p>I have a ${animal}. It is ${color}. It can ${action} very fast!</p>
+                    <p>I love my ${animal} very much. It is my favorite pet.</p>
+                </div>
+            `;
+            
+            document.getElementById('animalStory').innerHTML = story;
+            updateProgress(0.1);
+        }
+    </script>
+</body>
+</html>
