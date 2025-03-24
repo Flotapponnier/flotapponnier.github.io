@@ -1,6 +1,6 @@
 # Florent Tapponnier - Portfolio
 
-A retro, brutalist portfolio website showcasing my experience in C/C++, dorker and GenAI development projects.
+A retro, brutalist portfolio website showcasing my experience in C/C++, Dorker and GenAI development projects.
 
 ## Features
 
