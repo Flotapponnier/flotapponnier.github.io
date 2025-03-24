@@ -42,3 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 80);
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const languageCards = document.querySelectorAll('.language-card');
+    
+    languageCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+    });
+    
+    const languageSection = document.querySelector('#languages p.terminal-effect');
+    if (languageSection) {
+        const text = languageSection.textContent;
+        languageSection.textContent = '';
+
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            if (i < text.length) {
+                languageSection.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+            }
+        }, 80);
+    }
+});
